@@ -52,21 +52,42 @@ SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 CLANG_RESOURCE_DIR="$(xcrun --toolchain XcodeDefault.xctoolchain clang -print-resource-dir)/include"
 
 # Avoid Homebrew /usr/local/include modulemaps by pinning headers to the SDK only
-env -u CPATH -u C_INCLUDE_PATH -u OBJC_INCLUDE_PATH \
+BUILD_ENV=(env -u CPATH -u C_INCLUDE_PATH -u OBJC_INCLUDE_PATH \
     CLANG_MODULE_CACHE_PATH="$CLANG_MODULE_CACHE_DIR" \
-    TMPDIR="$TMPDIR_OVERRIDE" \
-    swift build -c release --product TemporaryAI \
-    -Xcc -nostdinc \
-    -Xcc -isystem"$CLANG_RESOURCE_DIR" \
-    -Xcc -isystem"$SDKROOT/usr/include" \
-    -Xcc -isystem"$SDKROOT/System/Library/Frameworks" \
-    -Xcc -iframework"$SDKROOT/System/Library/Frameworks" \
-    -Xcc -iframework"$SDKROOT/Library/Frameworks" \
-    -Xcc -F"$SDKROOT/System/Library/Frameworks" \
-    -Xcc -F"$SDKROOT/Library/Frameworks" \
-    -Xcc -isysroot"$SDKROOT" \
-    -Xswiftc -sdk -Xswiftc "$SDKROOT" \
+    TMPDIR="$TMPDIR_OVERRIDE")
+
+COMMON_FLAGS=(
+    -Xcc -nostdinc
+    -Xcc -isystem"$CLANG_RESOURCE_DIR"
+    -Xcc -isystem"$SDKROOT/usr/include"
+    -Xcc -isystem"$SDKROOT/System/Library/Frameworks"
+    -Xcc -iframework"$SDKROOT/System/Library/Frameworks"
+    -Xcc -iframework"$SDKROOT/Library/Frameworks"
+    -Xcc -F"$SDKROOT/System/Library/Frameworks"
+    -Xcc -F"$SDKROOT/Library/Frameworks"
+    -Xcc -isysroot"$SDKROOT"
+    -Xswiftc -sdk -Xswiftc "$SDKROOT"
     -Xswiftc -module-cache-path -Xswiftc "$MODULE_CACHE_DIR"
+)
+
+ARCHS=(arm64 x86_64)
+for ARCH in "${ARCHS[@]}"; do
+    "${BUILD_ENV[@]}" swift build -c release --product TemporaryAI --arch "$ARCH" "${COMMON_FLAGS[@]}"
+done
+
+UNIVERSAL_BIN_DIR=".build/release"
+mkdir -p "$UNIVERSAL_BIN_DIR"
+lipo -create \
+    ".build/arm64-apple-macosx/release/TemporaryAI" \
+    ".build/x86_64-apple-macosx/release/TemporaryAI" \
+    -output "$UNIVERSAL_BIN_DIR/TemporaryAI"
+
+# Copy resource bundle from either architecture output
+if [ -d ".build/arm64-apple-macosx/release/TemporaryAI_TemporaryAI.bundle" ]; then
+    cp -R ".build/arm64-apple-macosx/release/TemporaryAI_TemporaryAI.bundle" "$UNIVERSAL_BIN_DIR/"
+elif [ -d ".build/x86_64-apple-macosx/release/TemporaryAI_TemporaryAI.bundle" ]; then
+    cp -R ".build/x86_64-apple-macosx/release/TemporaryAI_TemporaryAI.bundle" "$UNIVERSAL_BIN_DIR/"
+fi
 
 # Check if build succeeded
 if [ $? -ne 0 ]; then
