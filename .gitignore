@@ -1,0 +1,63 @@
+# macOS and Xcode user data
+.DS_Store
+build/
+.build/
+DerivedData/
+xcuserdata/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+*.hmap
+
+# Swift Package Manager
+.build/
+.swiftpm/xcode/
+.swiftpm/configuration/registries.json
+.swiftpm/configuration/identity.json
+Packages/
+
+# Dependency managers
+Pods/
+Carthage/Build/
+Carthage/Checkouts/
+Dependencies/
+.accio/
+Rome/
+
+# IDE settings
+.idea/
+.vscode/
+
+# fastlane outputs
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# Archives and symbols
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+cookie/
+tools/
+
+# Temporary Icon Assets
+Resources/AppIcon.iconset/
+
+# Private Resources (Keep proprietary scripts closed source)
+Sources/Resources/chatgpt_default_script.js
+Sources/Resources/gemini_default_script.js
+
+
+GEMINI.md
+AGENTS.md

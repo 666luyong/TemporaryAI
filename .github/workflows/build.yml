@@ -1,0 +1,55 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build (CI)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
+        continue-on-error: true # Fallback to default if specific version not found
+
+      - name: Build Project
+        run: swift build -v
+
+  release:
+    name: Package and Release (CD)
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
+        continue-on-error: true
+
+      - name: Make script executable
+        run: chmod +x build_app.sh
+        
+      - name: Build App Bundle
+        run: ./build_app.sh
+        
+      - name: Compress App
+        run: |
+          cd build
+          zip -r ../TempAI-macOS.zip "临时AI.app"
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: TempAI-macOS.zip
+          draft: true
+          prerelease: false
+          generate_release_notes: true

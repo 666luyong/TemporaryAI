@@ -1,0 +1,14 @@
+// GeminiTempChat Default Script Template
+//
+// This file is a placeholder for the proprietary logic used in the official release.
+// In the open-source version, this script is empty by default.
+//
+// You can add your own JavaScript here to:
+// 1. Hide UI elements (sidebars, history).
+// 2. Automate interactions.
+// 3. Inject custom CSS.
+//
+// Rename this file to 'gemini_default_script.js' to use it locally,
+// or paste your script into the App's settings -> "Gemini Script".
+
+console.log("GeminiTempChat: Open Source Framework Loaded");
