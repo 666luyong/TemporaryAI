@@ -71,9 +71,13 @@ COMMON_FLAGS=(
 )
 
 ARCHS=(arm64 x86_64)
-for ARCH in "${ARCHS[@]}"; do
-    "${BUILD_ENV[@]}" swift build -c release --product TemporaryAI --arch "$ARCH" "${COMMON_FLAGS[@]}"
-done
+if [ "${SKIP_BUILD:-}" != "1" ]; then
+    for ARCH in "${ARCHS[@]}"; do
+        "${BUILD_ENV[@]}" swift build -c release --product TemporaryAI --arch "$ARCH" "${COMMON_FLAGS[@]}"
+    done
+else
+    echo "⏭️ Skipping build (using prebuilt slices)."
+fi
 
 UNIVERSAL_BIN_DIR=".build/release"
 mkdir -p "$UNIVERSAL_BIN_DIR"

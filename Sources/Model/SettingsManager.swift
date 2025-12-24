@@ -91,10 +91,20 @@ final class SettingsManager: ObservableObject {
     }
     
     private static func loadBundledScript(named baseName: String) -> String? {
-        guard let url = Bundle.module.url(forResource: baseName, withExtension: "js", subdirectory: "Resources") else {
-            return nil
+        var bundles: [Bundle] = []
+        if let bundleURL = Bundle.main.url(forResource: "TemporaryAI_TemporaryAI", withExtension: "bundle"),
+           let resourceBundle = Bundle(url: bundleURL) {
+            bundles.append(resourceBundle)
         }
-        return try? String(contentsOf: url)
+        bundles.append(Bundle.main)
+
+        for bundle in bundles {
+            if let url = bundle.url(forResource: baseName, withExtension: "js", subdirectory: "Resources")
+                ?? bundle.url(forResource: baseName, withExtension: "js") {
+                return try? String(contentsOf: url)
+            }
+        }
+        return nil
     }
     
 }
