@@ -10,14 +10,7 @@ on:
 jobs:
   build:
     name: Build (CI)
-    strategy:
-      matrix:
-        include:
-          - arch: arm64
-            runs-on: macos-latest
-          - arch: x86_64
-            runs-on: macos-13
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       
@@ -30,19 +23,7 @@ jobs:
           fi
 
       - name: Build Project
-        run: swift build -c release --product TemporaryAI --arch ${{ matrix.arch }} -v
-
-      - name: Collect Artifacts
-        run: |
-          mkdir -p artifacts/${{ matrix.arch }}
-          cp .build/${{ matrix.arch }}-apple-macosx/release/TemporaryAI artifacts/${{ matrix.arch }}/
-          cp -R .build/${{ matrix.arch }}-apple-macosx/release/TemporaryAI_TemporaryAI.bundle artifacts/${{ matrix.arch }}/
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: TemporaryAI-${{ matrix.arch }}
-          path: artifacts/${{ matrix.arch }}
+        run: swift build -c release --product TemporaryAI -v
 
   release:
     name: Package and Release (CD)
@@ -64,30 +45,9 @@ jobs:
 
       - name: Make script executable
         run: chmod +x build_app.sh
-        
-      - name: Download arm64 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: TemporaryAI-arm64
-          path: artifacts/arm64
-
-      - name: Download x86_64 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: TemporaryAI-x86_64
-          path: artifacts/x86_64
-
-      - name: Prepare Prebuilt Slices
-        run: |
-          mkdir -p .build/arm64-apple-macosx/release
-          mkdir -p .build/x86_64-apple-macosx/release
-          cp artifacts/arm64/TemporaryAI .build/arm64-apple-macosx/release/
-          cp -R artifacts/arm64/TemporaryAI_TemporaryAI.bundle .build/arm64-apple-macosx/release/
-          cp artifacts/x86_64/TemporaryAI .build/x86_64-apple-macosx/release/
-          cp -R artifacts/x86_64/TemporaryAI_TemporaryAI.bundle .build/x86_64-apple-macosx/release/
 
       - name: Build App Bundle
-        run: SKIP_BUILD=1 ./build_app.sh
+        run: ./build_app.sh
         
       - name: Compress App
         run: |
