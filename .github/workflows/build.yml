@@ -19,7 +19,7 @@ jobs:
         continue-on-error: true # Fallback to default if specific version not found
 
       - name: Build Project
-        run: swift build -v
+        run: swift build -c release --product TemporaryAI -v
 
   release:
     name: Package and Release (CD)
@@ -44,12 +44,12 @@ jobs:
       - name: Compress App
         run: |
           cd build
-          zip -r ../TempAI-macOS.zip "临时AI.app"
+          zip -r ../TemporaryAI-macOS.zip "Temporary AI.app"
           
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: TempAI-macOS.zip
+          files: TemporaryAI-macOS.zip
           draft: true
           prerelease: false
           generate_release_notes: true
