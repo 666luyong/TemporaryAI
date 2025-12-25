@@ -8,6 +8,10 @@
 
 A native macOS application based on **SwiftUI + WKWebView**, designed for a **privacy-first** AI chat experience. It enforces "Temporary Chat" mode for AI services and actively blocks access to history, ensuring your conversations are "burn after reading."
 
+<p align="center">
+  <img src="screenshot/screenshot.png" alt="Screenshot" width="50%">
+</p>
+
 ## Core Features
 
 - **Privacy First**:

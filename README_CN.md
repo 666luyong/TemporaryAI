@@ -8,6 +8,12 @@
 
 一个基于 SwiftUI + WKWebView 的 macOS 原生应用，专为 **隐私优先** 的 AI 聊天体验设计。它强制开启 AI 服务的“临时聊天”模式，并主动隐藏历史记录访问，确保你的对话“阅后即焚”。
 
+<p align="center">
+  <img src="screenshot/screenshot.png" alt="Screenshot" width="50%">
+</p>
+
+
+[用户交流](screenshot/wechat_group.jpg)
 ## 核心特性
 
 - **隐私优先 (Privacy First)**：
@@ -55,7 +61,8 @@
 
 ## ⚙️ 配置与自定义脚本
 
-为了遵守开源合规性并允许用户自定义，本项目**默认不包含**用于隐藏网页侧边栏的专有 JavaScript 脚本。
+为了遵守开源合规性并允许用户自定义，本项目**默认不包含**用于隐藏网页侧边栏并强制进入临时会话模式的专有 JavaScript 脚本。
+未来将会以合适的形式发布适配当前 ChatGPT 或 Gemini 官方页面的脚本。
 
 ### 如何启用界面优化脚本？
 
@@ -85,10 +92,6 @@
     - `UserScriptManager`: 管理 CSS/JS 注入。
     - `TabManager`: 管理多标签页状态。
 
-## 🤝 贡献指南
-
-欢迎提交 Issue 或 Pull Request！
-如果你发现了更好的 DOM 隐藏规则，或者想支持新的 AI 服务，请随时贡献。
 
 ## 📄 开源协议
 
