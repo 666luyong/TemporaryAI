@@ -12,6 +12,8 @@ A native macOS application based on **SwiftUI + WKWebView**, designed for a **pr
   <img src="screenshot/screenshot.png" alt="Screenshot" width="50%">
 </p>
 
+[User Community](screenshot/wechat_group.jpg)
+
 ## Core Features
 
 - **Privacy First**:
@@ -59,7 +61,8 @@ This is a standard Swift Package Manager (SPM) project.
 
 ## ⚙️ Configuration & Custom Scripts
 
-To comply with open-source policies and allow user customization, this project **does not include** proprietary JavaScript scripts for hiding the sidebar by default.
+To comply with open-source policies and allow user customization, this project **does not include** proprietary JavaScript scripts for hiding the sidebar or forcing temporary sessions by default.
+Compatible scripts for the current ChatGPT/Gemini UI will be released in a proper form later.
 
 ### How to Enable Interface Optimization Scripts?
 
