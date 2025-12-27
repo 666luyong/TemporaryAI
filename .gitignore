@@ -54,9 +54,6 @@ tools/
 # Temporary Icon Assets
 Resources/AppIcon.iconset/
 
-# Private Resources (Keep proprietary scripts closed source)
-Sources/Resources/chatgpt_default_script.js
-Sources/Resources/gemini_default_script.js
 
 
 GEMINI.md

@@ -61,21 +61,18 @@
 
 ## ⚙️ 配置与自定义脚本
 
-为了遵守开源合规性并允许用户自定义，本项目**默认不包含**用于隐藏网页侧边栏并强制进入临时会话模式的专有 JavaScript 脚本。
-未来将会以合适的形式发布适配当前 ChatGPT 或 Gemini 官方页面的脚本。
+本项目已开源默认脚本，用于隐藏网页侧边栏并强制进入临时会话模式。
 
-### 如何启用界面优化脚本？
+### 如何自定义脚本？
 
-在 `Sources/Resources/` 目录下，你会看到以下示例文件：
-- `chatgpt_default_script.js.example`
-- `gemini_default_script.js.example`
+在 `Sources/Resources/` 目录下，你会看到：
+- `chatgpt_default_script.js`
+- `gemini_default_script.js`
 
-默认情况下应用**不会加载任何优化脚本**，网页行为保持原样，只有在你提供代码后才会生效。
+应用默认会自动加载这些脚本。你可以：
 
-**启用方法：**
-
-1. **直接重命名（推荐开发使用）**：
-   将上述文件重命名为 `chatgpt_default_script.js` 和 `gemini_default_script.js`，并在其中编写你的 DOM 操作代码（例如 `document.querySelector('...').style.display = 'none'`）。
+1. **直接修改文件（推荐开发使用）**：
+   修改上述文件以调整 DOM 行为（例如 `document.querySelector('...').style.display = 'none'`）。
 
 2. **在 App 设置中配置（推荐用户使用）**：
    启动 App 后，点击右上角齿轮图标进入 **设置 (Settings)** -> **脚本 (Scripts)**。

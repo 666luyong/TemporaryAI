@@ -61,21 +61,18 @@ This is a standard Swift Package Manager (SPM) project.
 
 ## ⚙️ Configuration & Custom Scripts
 
-To comply with open-source policies and allow user customization, this project **does not include** proprietary JavaScript scripts for hiding the sidebar or forcing temporary sessions by default.
-Compatible scripts for the current ChatGPT/Gemini UI will be released in a proper form later.
+This project includes open-source default scripts that hide the sidebar and enforce temporary session behavior.
 
-### How to Enable Interface Optimization Scripts?
+### How to Customize the Scripts?
 
-In the `Sources/Resources/` directory, you will find the following example files:
-- `chatgpt_default_script.js.example`
-- `gemini_default_script.js.example`
+In the `Sources/Resources/` directory, you will find:
+- `chatgpt_default_script.js`
+- `gemini_default_script.js`
 
-By default the app **does not load any optimization scripts**, so the web UI stays unchanged unless you supply code.
+By default the app loads these scripts automatically. You can:
 
-**Methods:**
-
-1. **Rename (Recommended for Developers)**:
-   Rename the above files to `chatgpt_default_script.js` and `gemini_default_script.js`, and write your DOM manipulation code inside (e.g., `document.querySelector('...').style.display = 'none'`).
+1. **Edit Local Files (Recommended for Developers)**:
+   Modify the files above to adjust DOM behavior (e.g., `document.querySelector('...').style.display = 'none'`).
 
 2. **Configure in App Settings (Recommended for Users)**:
    Launch the App, click the gear icon in the top right to enter **Settings** -> **Scripts**.
